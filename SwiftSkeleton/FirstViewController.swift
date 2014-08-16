@@ -24,8 +24,9 @@ class FirstViewController: UIViewController, SideMenuDelegate{
        
         
         qo.type = "screenprint"
+        singleton.designPost(singleton.designObject)
+        //singleton.quotePost(qo)
 
-        singleton.quotePost(qo)
         
               
              //  singleton.textExample()
@@ -35,9 +36,7 @@ class FirstViewController: UIViewController, SideMenuDelegate{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func testQuote() {
-        
-    }
+  
 
     func sideMenuDidSelectItemAtIndex(index: Int) {
         singleton.sideMenu?.toggleMenu()

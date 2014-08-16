@@ -20,6 +20,10 @@ class Singleton {
     var sideMenu:SideMenu?
     var apikey:String? = "17b03c3c38a23a46df62d0d8bb68665a"
     
+    var designObject:DesignObject = DesignObject()
+    
+    
+    
     var quoteParam:NSDictionary = ["0":"0"]
     var orderParam:NSDictionary = ["0":"0"]
     
@@ -62,10 +66,22 @@ class Singleton {
             }).onError({error -> Void in
                 println("Error!")
             })
-        
         post.go()
 
     }
+    
+    func designPost (qo:DesignObject) {
+        var url = "https://api.scalablepress.com/v2/design"
+        var post = SwiftNetworkingClient.post(url, params:
+            ["type":"\(qo.type)","name":"\(qo.name)","sides[front][color]":"\(qo.color)","sides[front][artwork]":"\(qo.artwork)"]
+            ).onComplete({results -> Void in
+                println(results)
+            }).onError({error -> Void in
+                println("Error!")
+            })
+        post.go()
+    }
+    
     func jsonify (dict: NSDictionary) -> NSString {
         var str = ""
         for (key,val) in dict {
@@ -75,6 +91,15 @@ class Singleton {
     }
    
 }
+
+class DesignObject : NSObject {
+    var name:String? = "a"
+    var type:String = "b"
+    var color:String = "Red" //Color
+    var artwork:String = "white"
+    
+}
+
 
 class QuoteObject : NSObject {
     var type:String = ""
