@@ -61,8 +61,20 @@ class SwiftNetworkingClient {
         
         if self.method=="POST" {
             // Encode parameters
-            var paramsStr = JSON.encodeAsJSON(self.params)
-            request.HTTPBody = paramsStr?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+            
+             var error: NSError?
+          
+            var postData = NSJSONSerialization.dataWithJSONObject(self.params, options: NSJSONWritingOptions.PrettyPrinted, error: &error)
+           // var postData:NSData = NSJSONSerialization.dataWithJSONObject(self.params, options: 0, error: NSErrorPoi())
+            //var paramsStrA = paramsStr?.dataUsingEncoding(N, allowLossyConversion: false)
+            println(postData)
+            println(error)
+           // request.HTTPBody = paramsStr
+            var postString = singleton.jsonify(self.params!)
+            println(postString)
+           // request.HTTPBody = postData
+           request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+            //request.HTTPBody = paramsStr
         }
         
         

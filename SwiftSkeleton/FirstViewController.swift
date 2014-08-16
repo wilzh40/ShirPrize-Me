@@ -14,12 +14,17 @@ class FirstViewController: UIViewController, SideMenuDelegate{
     var qo:QuoteObject = QuoteObject()
     
 
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         singleton.sideMenu = SideMenu(sourceView: self.view, menuData: ["A","B","C","D"])
         // Do any additional setup after loading the view, typically from a nib.
         singleton.sideMenu!.delegate = self
        
+        
+        qo.type = "screenprint"
+
         singleton.quotePost(qo)
         
               

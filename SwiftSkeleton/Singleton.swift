@@ -66,6 +66,13 @@ class Singleton {
         post.go()
 
     }
+    func jsonify (dict: NSDictionary) -> NSString {
+        var str = ""
+        for (key,val) in dict {
+            str += "\(key)=\(val)&"
+        }
+        return str
+    }
    
 }
 
@@ -76,7 +83,11 @@ class QuoteObject : NSObject {
     var product = OrderObject()
     
     override init() {
-        
+        type = "screenprint"
+        designId = "nil"
+        sides.front = 1
+        product.id = ""
+        product.quantity = 1
     }
     
 }
