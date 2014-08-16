@@ -52,7 +52,20 @@ class Singleton {
         getTracksRequest.go()
         
     } */
-    
+    func quotePost (qo:QuoteObject) {
+        
+        var url = "https://api.scalablepress.com/v2/quote"
+        var post = SwiftNetworkingClient.post(url, params:
+            ["type":"\(qo.type)","designId":"\(qo.designId)","sides[front]":"\(qo.sides.front)","sides[back]":"\(qo.sides.back)","sides[left]":"\(qo.sides.left)","sides[right]":"\(qo.sides.left)","products[0][id]":"\(qo.product.id)","products[0][color]":"\(qo.product.color)","products[0][size]":"\(qo.product.size)","products[0][quantity]":"\(qo.product.quantity)"]
+            ).onComplete({results -> Void in
+                println(results)
+            }).onError({error -> Void in
+                println("Error!")
+            })
+        
+        post.go()
+
+    }
    
 }
 
@@ -60,7 +73,7 @@ class QuoteObject : NSObject {
     var type:String = ""
     var designId:String = ""
     var sides:Sides = Sides.init()
-    var products:NSArray = []
+    var product = OrderObject()
     
     override init() {
         
