@@ -11,8 +11,8 @@
 		77A2D4FA199F1F0E002DD4CE /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2D4F8199F1F0E002DD4CE /* MenuTableViewController.swift */; };
 		77A2D4FC199F2845002DD4CE /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2D4FB199F2845002DD4CE /* NavigationController.swift */; };
 		77A2D4FE199F312B002DD4CE /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2D4FD199F312B002DD4CE /* Singleton.swift */; };
-		77A2D502199F4C27002DD4CE /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2D4FF199F4C27002DD4CE /* JSON.swift */; };
-		77A2D503199F4C27002DD4CE /* SwiftNetworkingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2D501199F4C27002DD4CE /* SwiftNetworkingClient.swift */; };
+		77A2D506199F5707002DD4CE /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2D504199F5707002DD4CE /* JSON.swift */; };
+		77A2D507199F5707002DD4CE /* SwiftNetworkingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2D505199F5707002DD4CE /* SwiftNetworkingClient.swift */; };
 		77A4A75B199E8E680015C644 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4A75A199E8E680015C644 /* AppDelegate.swift */; };
 		77A4A75D199E8E680015C644 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4A75C199E8E680015C644 /* FirstViewController.swift */; };
 		77A4A75F199E8E680015C644 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4A75E199E8E680015C644 /* SecondViewController.swift */; };
@@ -36,9 +36,8 @@
 		77A2D4F8199F1F0E002DD4CE /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		77A2D4FB199F2845002DD4CE /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		77A2D4FD199F312B002DD4CE /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
-		77A2D4FF199F4C27002DD4CE /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
-		77A2D500199F4C27002DD4CE /* SwiftNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftNetworking.h; sourceTree = "<group>"; };
-		77A2D501199F4C27002DD4CE /* SwiftNetworkingClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNetworkingClient.swift; sourceTree = "<group>"; };
+		77A2D504199F5707002DD4CE /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
+		77A2D505199F5707002DD4CE /* SwiftNetworkingClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNetworkingClient.swift; sourceTree = "<group>"; };
 		77A4A755199E8E680015C644 /* SwiftSkeleton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftSkeleton.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77A4A759199E8E680015C644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77A4A75A199E8E680015C644 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -97,9 +96,8 @@
 				77A2D4F7199F1F0E002DD4CE /* SideMenu.swift */,
 				77A2D4F8199F1F0E002DD4CE /* MenuTableViewController.swift */,
 				77A2D4FD199F312B002DD4CE /* Singleton.swift */,
-				77A2D4FF199F4C27002DD4CE /* JSON.swift */,
-				77A2D500199F4C27002DD4CE /* SwiftNetworking.h */,
-				77A2D501199F4C27002DD4CE /* SwiftNetworkingClient.swift */,
+				77A2D504199F5707002DD4CE /* JSON.swift */,
+				77A2D505199F5707002DD4CE /* SwiftNetworkingClient.swift */,
 				77A4A760199E8E680015C644 /* Main.storyboard */,
 				77A4A763199E8E680015C644 /* Images.xcassets */,
 				77A4A758199E8E680015C644 /* Supporting Files */,
@@ -236,10 +234,10 @@
 				77A2D4FA199F1F0E002DD4CE /* MenuTableViewController.swift in Sources */,
 				77A2D4F9199F1F0E002DD4CE /* SideMenu.swift in Sources */,
 				77A2D4FE199F312B002DD4CE /* Singleton.swift in Sources */,
-				77A2D503199F4C27002DD4CE /* SwiftNetworkingClient.swift in Sources */,
+				77A2D507199F5707002DD4CE /* SwiftNetworkingClient.swift in Sources */,
 				77A2D4FC199F2845002DD4CE /* NavigationController.swift in Sources */,
 				77A4A75D199E8E680015C644 /* FirstViewController.swift in Sources */,
-				77A2D502199F4C27002DD4CE /* JSON.swift in Sources */,
+				77A2D506199F5707002DD4CE /* JSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

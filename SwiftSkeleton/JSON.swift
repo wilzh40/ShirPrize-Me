@@ -119,7 +119,7 @@ func generate() -> GeneratorType
     subscript(index: String) -> JSONVal {
         switch self {
             case .Dictionary(let dict):
-                if dict[index]? {
+                if dict[index]? != nil {
                     return dict[index]!
                 }
                 return JSONVal("JSON Fault")
@@ -174,7 +174,7 @@ func generate() -> GeneratorType
             var arr = [JSONVal]()
             
             for val in jsonArr {
-                arr += JSONVal(val)
+                arr.append(JSONVal(val))
             }
             
             self = .JSONArray( arr )
@@ -219,7 +219,7 @@ public class JSON {
             json = "\(json)["
             for embeddedObject: AnyObject in rootObjectArr {
                 var encodedEmbeddedObject = encodeAsJSON(embeddedObject)
-                if encodedEmbeddedObject? {
+                if encodedEmbeddedObject? != nil {
                     json = "\(json)\(encodedEmbeddedObject!),"
                 }
                 else {

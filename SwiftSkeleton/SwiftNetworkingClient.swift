@@ -44,7 +44,7 @@ class SwiftNetworkingClient {
         return newClient
     }
     
-     func go() {
+    func go() {
         let url = NSURL(string: path)
         var request = NSMutableURLRequest(URL: url)
         
@@ -61,7 +61,7 @@ class SwiftNetworkingClient {
         
         println("Get \(self.method)")
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-            if error?==true {
+            if error? != nil {
                 println("ERROR: \(error.localizedDescription)")
                 if let cOnError = self.errorCompletionHandler {
                     cOnError(error!)
