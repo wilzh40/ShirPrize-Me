@@ -8,8 +8,12 @@
 
 import UIKit
 
-class FirstViewController: UIViewController, SideMenuDelegate{
+class FirstViewController: UIViewController, UIImagePickerControllerDelegate, SideMenuDelegate {
    
+    
+    let imagePicker:UIImagePickerController = UIImagePickerController()
+    
+    
     let singleton:Singleton = Singleton.sharedInstance
     var qo:QuoteObject = QuoteObject()
     
@@ -20,8 +24,10 @@ class FirstViewController: UIViewController, SideMenuDelegate{
         super.viewDidLoad()
         singleton.sideMenu = SideMenu(sourceView: self.view, menuData: ["A","B","C","D"])
         // Do any additional setup after loading the view, typically from a nib.
+        
         singleton.sideMenu!.delegate = self
-       
+       // imagePicker.delegate = self;
+    
         
         qo.type = "screenprint"
         singleton.designPost(singleton.designObject)
@@ -40,20 +46,41 @@ class FirstViewController: UIViewController, SideMenuDelegate{
 
     func sideMenuDidSelectItemAtIndex(index: Int) {
         singleton.sideMenu?.toggleMenu()
-        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil);
-        let vc : UIViewController = storyboard.instantiateViewControllerWithIdentifier("1") as UIViewController;
+        
+        switch index {
+       
+        case 1:
+            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil);
+            let vc : UIViewController = storyboard.instantiateViewControllerWithIdentifier("1") as UIViewController;
         
         //let navigationController = UINavigationController(rootViewController: vc)
 
        // self.presentViewController(navigationController, animated: true, completion: nil)
-        self.navigationController.setViewControllers([vc], animated: false)
-
+            self.navigationController.setViewControllers([vc], animated: false)
+            break
+        case 2:
+            
+            self.presentViewController(imagePicker, animated: true, completion: nil)
+            break
+        default:
+            break
+        }
  //   self.addChildViewController(vc)
     
     }
 
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!) {
+        print(info[UIImagePickerControllerReferenceURL])
+    }
+    func imagePickerControllerDidCancel(picker: UIImagePickerController!) {
+        print ("x")
+    }
     @IBAction func toggleSideMenu(sender: AnyObject) {
         singleton.sideMenu?.toggleMenu()
+    }
+    
+    @IBAction func presentImagePicker(sender: AnyObject){
+        self.presentViewController(imagePicker, animated: true, completion: nil)
     }
 }
 
