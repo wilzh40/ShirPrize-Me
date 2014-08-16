@@ -23,7 +23,7 @@ class Singleton {
     var quoteParam:NSDictionary = ["0":"0"]
     var orderParam:NSDictionary = ["0":"0"]
     
-    
+    /*
     func textExample () {
         var url = "https://api.scalablepress.com/v2/products/gildan-sweatshirt-crew"
         var getTracksRequest = SwiftNetworkingClient.get(url).onComplete({result -> Void in
@@ -36,7 +36,7 @@ class Singleton {
             println(song)
             }*/
             
-            var songs = parseJSON(result)["comments"]
+            var songs = parseJSON(result)["results"]
             //var songsArr = songs.val() as [String : Any]
             var songsArr = songs.val()
             println(songsArr)
@@ -51,7 +51,7 @@ class Singleton {
         
         getTracksRequest.go()
         
-    }
+    } */
     
    
 }

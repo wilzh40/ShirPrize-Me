@@ -18,7 +18,7 @@ enum ParameterEncodingMethod: Int {
 
 
 class SwiftNetworkingClient {
-    
+    var singleton:Singleton = Singleton.sharedInstance
     var deserializationMethod = DeserializationMethod.JSON
     var parameterEncordingMethod = ParameterEncodingMethod.Form
     
@@ -48,6 +48,13 @@ class SwiftNetworkingClient {
         let url = NSURL(string: path)
         var request = NSMutableURLRequest(URL: url)
         
+        //Add Authentication
+        
+        let loginString = NSString(format: "%@:%@", "", singleton.apikey!)
+        let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)
+        let base64LoginString = loginData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.fromMask(0))
+
+        request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
         
         
         request.HTTPMethod = self.method
@@ -61,16 +68,16 @@ class SwiftNetworkingClient {
         
         println("Get \(self.method)")
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-            if error? != nil {
+          /*  if error? != nil {
                 println("ERROR: \(error.localizedDescription)")
                 if let cOnError = self.errorCompletionHandler {
                     cOnError(error!)
                 }
-            }
-            else {
+            }*/
+          //  else {
                 var str = NSString(data: data, encoding: NSUTF8StringEncoding)
                 self.completionHandler!(str)
-            }
+           // }
         })
     }
     
