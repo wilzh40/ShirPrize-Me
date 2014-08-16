@@ -11,17 +11,32 @@ import UIKit
 class FirstViewController: UIViewController, SideMenuDelegate{
    
     let singleton:Singleton = Singleton.sharedInstance
+    var qo:QuoteObject = QuoteObject()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         singleton.sideMenu = SideMenu(sourceView: self.view, menuData: ["A","B","C","D"])
         // Do any additional setup after loading the view, typically from a nib.
         singleton.sideMenu!.delegate = self
+        
+        
+        var url = "https://api.scalablepress.com/v2/quote"
+        var post = SwiftNetworkingClient.post(url, params: ["username":"", "":"/(singleton.apikey)"] ).onComplete({results -> Void in
+            println(results)
+        }).onError({error -> Void in
+            println("Error!")
+        })
+        
+        post.go()
+        singleton.textExample()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    func testQuote() {
+        
     }
 
     func sideMenuDidSelectItemAtIndex(index: Int) {
