@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class FourthViewController: UIViewController {
+class FourthViewController: UIViewController,SingletonDelegate {
     let singleton:Singleton = Singleton.sharedInstance
     
     @IBOutlet  var totalPrice:UILabel?
@@ -18,6 +18,7 @@ class FourthViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        singleton.delegate = self
         var randomNumber = arc4random()%200000
         var randomImage:UIImage = singleton.getImageFromUrl("https://openclipart.org/image/200px/svg_to_png/\(randomNumber)/write2.png")
         
@@ -27,7 +28,7 @@ class FourthViewController: UIViewController {
             var randomNumber = arc4random()%200000
             randomImage = singleton.getImageFromUrl("https://openclipart.org/image/200px/svg_to_png/\(randomNumber)/write2.png")
         }
-        self.progressBar?.setProgress(0.35, animated: true)
+        self.progressBar?.setProgress(0.15, animated: true)
         
         // imgFromUrl.image = randomImage
         singleton.artworkPath = "https://openclipart.org/image/200px/svg_to_png/\(randomNumber)/write2"
@@ -41,19 +42,29 @@ class FourthViewController: UIViewController {
         singleton.designPost()
         
       //  progressBar.val
-        totalPrice?.text = "\(singleton.totalPrice)"
-        pricePerShirt?.text = "\(singleton.pricePerUnit)"
+       
        
         
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    
         // Dispose of any resources that can be recreated.
     }
-    
+    func designDidComplete() {
+        self.progressBar?.setProgress(0.2, animated: true)
+        println("Design did complete")
+    }
+    func quoteDidComplete() {
+        self.progressBar?.setProgress(1, animated: true)
+        totalPrice?.text = "\(singleton.totalPrice)"
+        pricePerShirt?.text = "\(singleton.pricePerUnit)"
+    }
+    func orderDidComplete() {
+        
+    }
   
-    
     
 }
 

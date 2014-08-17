@@ -8,6 +8,13 @@
 
 import Foundation
 import UIKit
+
+@objc protocol SingletonDelegate {
+    func quoteDidComplete()
+    func designDidComplete()
+    func orderDidComplete()
+}
+
 class Singleton {
     
     class var sharedInstance : Singleton {
@@ -16,7 +23,8 @@ class Singleton {
         }
         return Static.instance
     }
-    
+    var delegate : SingletonDelegate?
+
     var sideMenu:SideMenu?
     var frostedSidebar:FrostedSidebar?
     var apikey:String? = "17b03c3c38a23a46df62d0d8bb68665a"
@@ -83,7 +91,7 @@ class Singleton {
                 self.orderToken = json["orderToken"].asString!
                 self.totalPrice = json["total"].asDouble!
                 self.pricePerUnit = json["total"].asDouble!/Double(self.quoteObject.product.quantity)
-                
+                 self.delegate?.quoteDidComplete()
                 println("Order Token:\(self.orderToken)")
             }).onError({error -> Void in
                 println("Error!")
@@ -98,12 +106,13 @@ class Singleton {
             ["type":"\(designObject.type)","name":"\(designObject.name)","sides[front][colors][0]":"\(designObject.color)","sides[front][artwork]":"\(designObject.artwork)","sides[front][dimensions][width]":"\(designObject.width)"/*,"sides[front][dimensions][height]":"\(designObject.height)"*/]
             ).onComplete({results -> Void in
                 println(results)
-
+                
                 let json = JSON.parse(results)
                 self.designID = json["designId"].asString!
                 self.quoteObject.designId = json["designId"].asString!
                 println(self.designID)
                 self.quotePost()
+                self.delegate?.designDidComplete()
 
             }).onError({error -> Void in
                 println("Error!")
@@ -111,13 +120,14 @@ class Singleton {
         post.go()
     }
     func orderPost () {
-        var url = "https://api.scalablepress.com/v2/design"
+        var url = "https://api.scalablepress.com/v2/order"
         var post = SwiftNetworkingClient.post(url, params:
             ["orderToken":self.orderToken]
             ).onComplete({results -> Void in
                 println(results)
                 
                 let json = JSON.parse(results)
+                self.delegate?.orderDidComplete()
                 
             }).onError({error -> Void in
                 println("Error!")

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		774E590619A1010100012740 /* FifthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774E590519A1010100012740 /* FifthViewController.swift */; };
 		778E4E9719A0963D00F162BD /* Background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 778E4E8B19A0963D00F162BD /* Background.jpg */; };
 		778E4E9819A0963D00F162BD /* burger.png in Resources */ = {isa = PBXBuildFile; fileRef = 778E4E8C19A0963D00F162BD /* burger.png */; };
 		778E4E9919A0963D00F162BD /* burger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 778E4E8D19A0963D00F162BD /* burger@2x.png */; };
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		774E590519A1010100012740 /* FifthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FifthViewController.swift; sourceTree = "<group>"; };
 		778E4E8B19A0963D00F162BD /* Background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background.jpg; sourceTree = "<group>"; };
 		778E4E8C19A0963D00F162BD /* burger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = burger.png; sourceTree = "<group>"; };
 		778E4E8D19A0963D00F162BD /* burger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "burger@2x.png"; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				77A4A75E199E8E680015C644 /* SecondViewController.swift */,
 				778E4EA719A0A5A800F162BD /* ThirdViewController.swift */,
 				778E4EA919A0B60200F162BD /* FourthViewController.swift */,
+				774E590519A1010100012740 /* FifthViewController.swift */,
 				778E4EAD19A0B8E900F162BD /* YYSkinkitView.swift */,
 				77A2D4F7199F1F0E002DD4CE /* SideMenu.swift */,
 				77A2D4F8199F1F0E002DD4CE /* MenuTableViewController.swift */,
@@ -296,6 +299,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				774E590619A1010100012740 /* FifthViewController.swift in Sources */,
 				77A4A75F199E8E680015C644 /* SecondViewController.swift in Sources */,
 				77A4A75B199E8E680015C644 /* AppDelegate.swift in Sources */,
 				77A2D4FA199F1F0E002DD4CE /* MenuTableViewController.swift in Sources */,
