@@ -8,12 +8,10 @@
 
 import UIKit
 
-class FirstViewController: UIViewController, UIImagePickerControllerDelegate, SideMenuDelegate {
-   
+class FirstViewController: UIViewController, UIImagePickerControllerDelegate, SideMenuDelegate,FrostedSidebarDelegate {
+       
     
     let imagePicker:UIImagePickerController = UIImagePickerController()
-    
-    
     let singleton:Singleton = Singleton.sharedInstance
 
     
@@ -24,12 +22,11 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        singleton.sideMenu = SideMenu(sourceView: self.view, menuData: ["A","B","C","D"])
         // Do any additional setup after loading the view, typically from a nib.
 
         imgFromUrl.image = singleton.getImageFromUrl("http://developer.apple.com/icloud/images/storage-backup.png")
-
-        singleton.sideMenu!.delegate = self
+        singleton.initFrostedSidebar()
+        singleton.frostedSidebar!.delegate = self
        // imagePicker.delegate = self;
     
         
@@ -79,10 +76,9 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
     func imagePickerControllerDidCancel(picker: UIImagePickerController!) {
         print ("x")
     }
-    @IBAction func toggleSideMenu(sender: AnyObject) {
-        singleton.sideMenu?.toggleMenu()
+    @IBAction func onBurger() {
+        singleton.frostedSidebar!.showInViewController(self, animated: true)
     }
-    
     @IBAction func presentImagePicker(sender: AnyObject){
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
@@ -107,17 +103,29 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
         
         println("Pushed")
         
-        
-        
         singleton.designObject.artwork = singleton.artworkPath
-       
-        
-        
         singleton.designPost()
-       
-        
         
     }
+    func sidebar(sidebar: FrostedSidebar, willShowOnScreenAnimated animated: Bool){
+        
+    }
+    func sidebar(sidebar: FrostedSidebar, didShowOnScreenAnimated animated: Bool){
+        
+    }
+    func sidebar(sidebar: FrostedSidebar, willDismissFromScreenAnimated animated: Bool){
+        
+    }
+    func sidebar(sidebar: FrostedSidebar, didDismissFromScreenAnimated animated: Bool){
+        
+    }
+    func sidebar(sidebar: FrostedSidebar, didTapItemAtIndex index: Int){
+        
+    }
+    func sidebar(sidebar: FrostedSidebar, didEnable itemEnabled: Bool, itemAtIndex index: Int){
+        
+    }
+
     
 
 }
