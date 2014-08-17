@@ -27,7 +27,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
         singleton.sideMenu = SideMenu(sourceView: self.view, menuData: ["A","B","C","D"])
         // Do any additional setup after loading the view, typically from a nib.
 
-        imgFromUrl.image = singleton.getImageFromUrl("https://developer.apple.com/icloud/images/storage-backup.png")
+        imgFromUrl.image = singleton.getImageFromUrl("http://developer.apple.com/icloud/images/storage-backup.png")
 
         singleton.sideMenu!.delegate = self
        // imagePicker.delegate = self;
@@ -96,7 +96,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
             randomImage = singleton.getImageFromUrl("https://openclipart.org/image/200px/svg_to_png/\(randomNumber)/write2.png")
         }
         imgFromUrl.image = randomImage
-        singleton.artworkPath = "https://openclipart.org/image/800px/svg_to_png/\(randomNumber)/write2.png"
+        singleton.artworkPath = "https://openclipart.org/image/200px/svg_to_png/\(randomNumber)/write2.png"
     }
     @IBAction func saveImage () {
         singleton.artwork = imgFromUrl.image
@@ -110,11 +110,11 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
         
         
         singleton.designObject.artwork = singleton.artworkPath
-        singleton.designID = "screenprint"
+       
         
         
         singleton.designPost()
-        singleton.quotePost()
+       
         
         
     }

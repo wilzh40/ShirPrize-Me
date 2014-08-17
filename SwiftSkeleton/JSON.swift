@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+/*
 func parseJSON(data: NSData) -> JSONVal {
     return JSON(data).parse()
 }
@@ -15,7 +15,7 @@ func parseJSON(data: NSData) -> JSONVal {
 func parseJSON(str: String) -> JSONVal {
     return JSON(str).parse()
 }
-
+*/
 public enum JSONVal : Printable {
     
     // Generator protocol, use for `for x in y`
@@ -186,481 +186,312 @@ func generate() -> GeneratorType
 
     }
 }
-
 public class JSON {
-    
-    public var json = ""
-    public var data: NSData
-    
-    init(_ json: String) {
-        self.json = json
-        self.data = json.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-    }
-    
-    init(_ data: NSData) {
-        self.json = ""
-        self.data = data
-        //self.data = self.json.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-    }
-
-    public func parse() -> JSONVal {
-        var err: NSError? = nil
-        var val = JSONVal(NSJSONSerialization.JSONObjectWithData(self.data, options: nil, error: &err))
-        
-        return val
-    }
-    
-    
-    public class func encodeAsJSON(data: AnyObject!) -> String? {
-        var json = ""
-        
-        if let rootObjectArr = data as? [AnyObject] {
-            // Array
-            json = "\(json)["
-            for embeddedObject: AnyObject in rootObjectArr {
-                var encodedEmbeddedObject = encodeAsJSON(embeddedObject)
-                if encodedEmbeddedObject? != nil {
-                    json = "\(json)\(encodedEmbeddedObject!),"
-                }
-                else {
-                    println("Error creating JSON")
-                    return nil
-                }
-            }
-            json = "\(json)]"
-        }
-        else if let rootObjectStr = data as? String {
-            // This is a string, just return it
-            return escape(rootObjectStr)
-        }
-        else if let rootObjectDictStrStr = data as? Dictionary<String, String> {
-            json = "\(json){"
-            var numKeys = rootObjectDictStrStr.count
-            var keyIndex = 0
-            for (key,value) in rootObjectDictStrStr {
-                
-                // This could be a number
-                
-                if(keyIndex==(numKeys-1)) {
-                    json = json.stringByAppendingString("\(escape(key)):\(escape(value))")
-                }
-                else {
-                    json = json.stringByAppendingString("\(escape(key)):\(escape(value)),")
-                }
-                keyIndex = keyIndex + 1
-            }
-            json = "\(json)}"
-        }
-        else {
-            println("Failed to write JSON object")
-            return nil
-        }
-        
-        return json
-    }
-    
-    class func escape(str: String) -> String {
-        var newStr = str.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-        // Replace already escaped quotes with non-escaped quotes
-        newStr = newStr.stringByReplacingOccurrencesOfString("\\\"", withString: "\"")
-        // Escape all non-escaped quotes
-        newStr = newStr.stringByReplacingOccurrencesOfString("\"", withString: "\\\"")
-        return "\"\(newStr)\""
-    }
-    
-    
+    private let _value:AnyObject
+    /// pass the object that was returned from
+    /// NSJSONSerialization
+    public init(_ obj:AnyObject) { self._value = obj }
+    /// pass the JSON object for another instance
+    public init(_ json:JSON){ self._value = json._value }
 }
-
-//  SwiftyJSON.swift
-//
-//  Copyright (c) 2014年 Ruoyu Fu, Denis Lebedev.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-
-import Foundation
-
-
-enum JSONValue {
-    
-    
-    case JNumber(NSNumber)
-    case JString(String)
-    case JBool(Bool)
-    case JNull
-    case JArray(Array<JSONValue>)
-    case JObject(Dictionary<String,JSONValue>)
-    case JInvalid(NSError)
-    
-    var string: String? {
-        switch self {
-        case .JString(let value):
-            return value
-        default:
-            return nil
-            }
+/// class properties
+extension JSON {
+    public typealias NSNull = Foundation.NSNull
+    public typealias NSError = Foundation.NSError
+    public class var null:NSNull { return NSNull() }
+    /// pases string to the JSON object
+    public class func parse(str:String)->JSON {
+        var err:NSError?
+        let enc = NSUTF8StringEncoding
+        var obj:AnyObject? = NSJSONSerialization.JSONObjectWithData(
+            str.dataUsingEncoding(enc), options:nil, error:&err
+        )
+        return err != nil ? JSON(err!) : JSON(obj!)
     }
-    
-    var url: NSURL? {
-        switch self {
-        case .JString(let value):
-            return NSURL(string: value)
-        default:
-            return nil
-            }
+    /// fetch the JSON string from NSURL
+    public class func fromNSURL(nsurl:NSURL) -> JSON {
+        var enc:NSStringEncoding = NSUTF8StringEncoding
+        var err:NSError?
+        let str:String? =
+        NSString.stringWithContentsOfURL(
+            nsurl, usedEncoding:&enc, error:&err
+        )
+        return err != nil ? JSON(err!) : JSON.parse(str!)
     }
-    var number: NSNumber? {
-        switch self {
-        case .JNumber(let value):
-            return value
-        default:
-            return nil
-            }
+    /// fetch the JSON string from URL in the string
+    public class func fromURL(url:String) -> JSON {
+        return self.fromNSURL(NSURL.URLWithString(url))
     }
-    
-    var double: Double? {
-        switch self {
-        case .JNumber(let value):
-            return value.doubleValue
-        case .JString(let value):
-            return (value as NSString).doubleValue
-        default:
+    /// does what JSON.stringify in ES5 does.
+    /// when the 2nd argument is set to true it pretty prints
+    public class func stringify(obj:AnyObject, pretty:Bool=false) -> String! {
+        if !NSJSONSerialization.isValidJSONObject(obj) {
+            JSON(NSError(
+                domain:"JSONErrorDomain",
+                code:422,
+                userInfo:[NSLocalizedDescriptionKey: "not an JSON object"]
+                ))
             return nil
-            }
-    }
-    
-    var integer: Int? {
-        switch self {
-        case .JBool(let value):
-            return Int(value)
-        case .JNumber(let value):
-            return value.integerValue
-        case .JString(let value):
-            return (value as NSString).integerValue
-        default:
-            return nil
-            }
-    }
-    
-    var bool: Bool? {
-        switch self {
-        case .JBool(let value):
-            return value
-        case .JNumber(let value):
-            return value.boolValue
-        case .JString(let value):
-            return (value as NSString).boolValue
-        default:
-            return nil
-            }
-    }
-    
-    var array: Array<JSONValue>? {
-        switch self {
-        case .JArray(let value):
-            return value
-        default:
-            return nil
-            }
-    }
-    
-    var object: Dictionary<String, JSONValue>? {
-        switch self {
-        case .JObject(let value):
-            return value
-        default:
-            return nil
-            }
-    }
-    
-    var first: JSONValue? {
-        switch self {
-        case .JArray(let jsonArray) where jsonArray.count > 0:
-            return jsonArray[0]
-        case .JObject(let jsonDictionary) where jsonDictionary.count > 0 :
-            let (_, value) = jsonDictionary[jsonDictionary.startIndex]
-            return value
-        default:
-            return nil
-            }
-    }
-    
-    var last: JSONValue? {
-        switch self {
-        case .JArray(let jsonArray) where jsonArray.count > 0:
-            return jsonArray[jsonArray.count-1]
-        case .JObject(let jsonDictionary) where jsonDictionary.count > 0 :
-            let (_, value) = jsonDictionary[jsonDictionary.endIndex]
-            return value
-        default:
-            return nil
-            }
-    }
-    
-    init (_ data: NSData!){
-        if let value = data{
-            var error:NSError? = nil
-            if let jsonObject : AnyObject = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &error) {
-                self = JSONValue(jsonObject)
-            }else{
-                self = JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1001, userInfo: [NSLocalizedDescriptionKey:"JSON Parser Error: Invalid Raw JSON Data"]))
-            }
-        }else{
-            self = JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1000, userInfo: [NSLocalizedDescriptionKey:"JSON Init Error: Invalid Value Passed In init()"]))
         }
-        
+        return JSON(obj).toString(pretty:pretty)
     }
-    
-    init (_ rawObject: AnyObject) {
-        switch rawObject {
-        case let value as NSNumber:
-            if String.fromCString(value.objCType) == "c" {
-                self = .JBool(value.boolValue)
-                return
+}
+/// instance properties
+extension JSON {
+    /// access the element like array
+    public subscript(idx:Int) -> JSON {
+        switch _value {
+        case let err as NSError:
+            return self
+        case let ary as NSArray:
+            if 0 <= idx && idx < ary.count {
+                return JSON(ary[idx]!)
             }
-            self = .JNumber(value)
-        case let value as NSString:
-            self = .JString(value)
-        case let value as NSNull:
-            self = .JNull
-        case let value as NSArray:
-            var jsonValues = [JSONValue]()
-            for possibleJsonValue : AnyObject in value {
-                let jsonValue = JSONValue(possibleJsonValue)
-                if  jsonValue {
-                    jsonValues.append(jsonValue)
-                }
-            }
-            self = .JArray(jsonValues)
-        case let value as NSDictionary:
-            var jsonObject = Dictionary<String, JSONValue>()
-            for (possibleJsonKey : AnyObject, possibleJsonValue : AnyObject) in value {
-                if let key = possibleJsonKey as? NSString {
-                    let jsonValue = JSONValue(possibleJsonValue)
-                    if jsonValue {
-                        jsonObject[key] = jsonValue
-                    }
-                }
-            }
-            self = .JObject(jsonObject)
+            return JSON(NSError(
+                domain:"JSONErrorDomain", code:404, userInfo:[
+                    NSLocalizedDescriptionKey:
+                    "[\(idx)] is out of range"
+                ]))
         default:
-            self = .JInvalid(NSError(domain: "JSONErrorDomain", code: 1000, userInfo: [NSLocalizedDescriptionKey:"JSON Init Error: Invalid Value Passed In init()"]))
-        }
+            return JSON(NSError(
+                domain:"JSONErrorDomain", code:500, userInfo:[
+                    NSLocalizedDescriptionKey: "not an array"
+                ]))
+            }
     }
-    
-    subscript(index: Int) -> JSONValue {
-        get {
-            switch self {
-            case .JArray(let jsonArray) where jsonArray.count > index:
-                return jsonArray[index]
-            case .JInvalid(let error):
-                if let userInfo = error.userInfo{
-                    if let breadcrumb = userInfo["JSONErrorBreadCrumbKey"] as? NSString{
-                        let newBreadCrumb = (breadcrumb as String) + "/\(index)"
-                        let newUserInfo = [NSLocalizedDescriptionKey: "JSON Keypath Error: Incorrect Keypath \"\(newBreadCrumb)\"",
-                            "JSONErrorBreadCrumbKey": newBreadCrumb]
-                        return JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1002, userInfo: newUserInfo))
-                    }
-                }
-                return self
+    /// access the element like dictionary
+    public subscript(key:String)->JSON {
+        switch _value {
+        case let err as NSError:
+            return self
+        case let dic as NSDictionary:
+            if let val:AnyObject = dic[key] { return JSON(val) }
+            return JSON(NSError(
+                domain:"JSONErrorDomain", code:404, userInfo:[
+                    NSLocalizedDescriptionKey:
+                    "[\"\(key)\"] not found"
+                ]))
+        default:
+            return JSON(NSError(
+                domain:"JSONErrorDomain", code:500, userInfo:[
+                    NSLocalizedDescriptionKey: "not an object"
+                ]))
+            }
+    }
+    /// access json data object
+    public var data:AnyObject? {
+        return self.isError ? nil : self._value
+    }
+    /// Gives the type name as string.
+    /// e.g. if it returns "Double"
+    /// .asDouble returns Double
+    public var type:String {
+        switch _value {
+        case is NSError: return "NSError"
+        case is NSNull: return "NSNull"
+        case let o as NSNumber:
+            switch String.fromCString(o.objCType)! {
+            case "c", "C": return "Bool"
+            case "q", "l", "i", "s": return "Int"
+            case "Q", "L", "I", "S": return "UInt"
+            default: return "Double"
+            }
+        case is NSString: return "String"
+        case is NSArray: return "Array"
+        case is NSDictionary: return "Dictionary"
+        default: return "NSError"
+            }
+    }
+    /// check if self is NSError
+    public var isError: Bool { return _value is NSError }
+    /// check if self is NSNull
+    public var isNull: Bool { return _value is NSNull }
+    /// check if self is Bool
+    public var isBool: Bool { return type == "Bool" }
+    /// check if self is Int
+    public var isInt: Bool { return type == "Int" }
+    /// check if self is UInt
+    public var isUInt: Bool { return type == "UInt" }
+    /// check if self is Double
+    public var isDouble: Bool { return type == "Double" }
+    /// check if self is any type of number
+    public var isNumber: Bool {
+        if let o = _value as? NSNumber {
+            let t = String.fromCString(o.objCType)!
+            return t != "c" && t != "C"
+            }
+            return false
+    }
+    /// check if self is String
+    public var isString: Bool { return _value is NSString }
+    /// check if self is Array
+    public var isArray: Bool { return _value is NSArray }
+    /// check if self is Dictionary
+    public var isDictionary: Bool { return _value is NSDictionary }
+    /// check if self is a valid leaf node.
+    public var isLeaf: Bool {
+        return !(isArray || isDictionary || isError)
+    }
+    /// gives NSError if it holds the error. nil otherwise
+    public var asError:NSError? {
+        return _value as? NSError
+    }
+    /// gives NSNull if self holds it. nil otherwise
+    public var asNull:NSNull? {
+        return _value is NSNull ? JSON.null : nil
+    }
+    /// gives Bool if self holds it. nil otherwise
+    public var asBool:Bool? {
+        switch _value {
+        case let o as NSNumber:
+            switch String.fromCString(o.objCType)! {
+            case "c", "C": return Bool(o.boolValue)
             default:
-                let breadcrumb = "\(index)"
-                let newUserInfo = [NSLocalizedDescriptionKey: "JSON Keypath Error: Incorrect Keypath \"\(breadcrumb)\"",
-                    "JSONErrorBreadCrumbKey": breadcrumb]
-                return JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1002, userInfo: newUserInfo))
+                return nil
             }
-        }
+        default: return nil
+            }
     }
-    
-    subscript(key: String) -> JSONValue {
-        get {
-            switch self {
-            case .JObject(let jsonDictionary):
-                if let value = jsonDictionary[key] {
-                    return value
-                }else {
-                    let breadcrumb = "\(key)"
-                    let newUserInfo = [NSLocalizedDescriptionKey: "JSON Keypath Error: Incorrect Keypath \"\(breadcrumb)\"",
-                        "JSONErrorBreadCrumbKey": breadcrumb]
-                    return JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1002, userInfo: newUserInfo))
-                }
-            case .JInvalid(let error):
-                if let userInfo = error.userInfo{
-                    if let breadcrumb = userInfo["JSONErrorBreadCrumbKey"] as? NSString{
-                        let newBreadCrumb = (breadcrumb as String) + "/\(key)"
-                        let newUserInfo = [NSLocalizedDescriptionKey: "JSON Keypath Error: Incorrect Keypath \"\(newBreadCrumb)\"",
-                            "JSONErrorBreadCrumbKey": newBreadCrumb]
-                        return JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1002, userInfo: newUserInfo))
-                    }
-                }
-                return self
+    /// gives Int if self holds it. nil otherwise
+    public var asInt:Int? {
+        switch _value {
+        case let o as NSNumber:
+            switch String.fromCString(o.objCType)! {
+            case "c", "C":
+                return nil
             default:
-                let breadcrumb = "/\(key)"
-                let newUserInfo = [NSLocalizedDescriptionKey: "JSON Keypath Error: Incorrect Keypath \"\(breadcrumb)\"",
-                    "JSONErrorBreadCrumbKey": breadcrumb]
-                return JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1002, userInfo: newUserInfo))
+                return Int(o.longLongValue)
             }
-        }
+        default: return nil
+            }
     }
-}
-
-extension JSONValue: Printable {
-    var description: String {
-        switch self {
-        case .JInvalid(let error):
-            return error.localizedDescription
+    /// gives Double if self holds it. nil otherwise
+    public var asDouble:Double? {
+        switch _value {
+        case let o as NSNumber:
+            switch String.fromCString(o.objCType)! {
+            case "c", "C":
+                return nil
+            default:
+                return Double(o.doubleValue)
+            }
+        default: return nil
+            }
+    }
+    // an alias to asDouble
+    public var asNumber:Double? { return asDouble }
+    /// gives String if self holds it. nil otherwise
+    public var asString:String? {
+        switch _value {
+        case let o as NSString:
+            return o as String
+        default: return nil
+            }
+    }
+    /// if self holds NSArray, gives a [JSON]
+    /// with elements therein. nil otherwise
+    public var asArray:[JSON]? {
+        switch _value {
+        case let o as NSArray:
+            var result = [JSON]()
+            for v:AnyObject in o { result.append(JSON(v)) }
+            return result
         default:
-            return _printableString("")
+            return nil
             }
     }
-    
-    var rawJSONString: String {
-        switch self {
-        case .JNumber(let value):
-            return "\(value)"
-        case .JBool(let value):
-            return "\(value)"
-        case .JString(let value):
-            let jsonAbleString = value.stringByReplacingOccurrencesOfString("\"", withString: "\\\"", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
-            return "\"\(jsonAbleString)\""
-        case .JNull:
-            return "null"
-        case .JArray(let array):
-            var arrayString = ""
-            for (index, value) in enumerate(array) {
-                if index != array.count - 1 {
-                    arrayString += "\(value.rawJSONString),"
-                }else{
-                    arrayString += "\(value.rawJSONString)"
-                }
+    /// if self holds NSDictionary, gives a [String:JSON]
+    /// with elements therein. nil otherwise
+    public var asDictionary:[String:JSON]? {
+        switch _value {
+        case let o as NSDictionary:
+            var result = [String:JSON]()
+            for (k:AnyObject, v:AnyObject) in o {
+                result[k as String] = JSON(v)
             }
-            return "[\(arrayString)]"
-        case .JObject(let object):
-            var objectString = ""
-            var (index, count) = (0, object.count)
-            for (key, value) in object {
-                if index != count - 1 {
-                    objectString += "\"\(key)\":\(value.rawJSONString),"
-                } else {
-                    objectString += "\"\(key)\":\(value.rawJSONString)"
-                }
-                index += 1
-            }
-            return "{\(objectString)}"
-        case .JInvalid:
-            return "INVALID_JSON_VALUE"
+            return result
+        default: return nil
             }
     }
-    
-    func _printableString(indent: String) -> String {
-        switch self {
-        case .JObject(let object):
-            var objectString = "{\n"
-            var index = 0
-            for (key, value) in object {
-                let valueString = value._printableString(indent + "  ")
-                if index != object.count - 1 {
-                    objectString += "\(indent)  \"\(key)\":\(valueString),\n"
-                } else {
-                    objectString += "\(indent)  \"\(key)\":\(valueString)\n"
-                }
-                index += 1
+    /// Yields date from string
+    public var asDate:NSDate? {
+        if let dateString = _value as? NSString {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
+            return dateFormatter.dateFromString(dateString)
             }
-            objectString += "\(indent)}"
-            return objectString
-        case .JArray(let array):
-            var arrayString = "[\n"
-            for (index, value) in enumerate(array) {
-                let valueString = value._printableString(indent + "  ")
-                if index != array.count - 1 {
-                    arrayString += "\(indent)  \(valueString),\n"
-                }else{
-                    arrayString += "\(indent)  \(valueString)\n"
-                }
-            }
-            arrayString += "\(indent)]"
-            return arrayString
-        default:
-            return rawJSONString
-        }
+            return nil
     }
-}
-
-extension JSONValue: BooleanType {
-    var boolValue: Bool {
-        switch self {
-        case .JInvalid:
-            return false
-        default:
-            return true
+    /// gives the number of elements if an array or a dictionary.
+    /// you can use this to check if you can iterate.
+    public var length:Int {
+        switch _value {
+        case let o as NSArray: return o.count
+        case let o as NSDictionary: return o.count
+        default: return 0
             }
     }
 }
-
-extension JSONValue : Equatable {
-    
-}
-
-func ==(lhs: JSONValue, rhs: JSONValue) -> Bool {
-    switch lhs {
-    case .JNumber(let lvalue):
-        switch rhs {
-        case .JNumber(let rvalue):
-            return rvalue == lvalue
+extension JSON : SequenceType {
+    public func generate()->GeneratorOf<(AnyObject,JSON)> {
+        switch _value {
+        case let o as NSArray:
+            var i = -1
+            return GeneratorOf<(AnyObject, JSON)> {
+                if ++i == o.count { return nil }
+                return (i, JSON(o[i]))
+            }
+        case let o as NSDictionary:
+            var ks = o.allKeys!.reverse()
+            return GeneratorOf<(AnyObject, JSON)> {
+                if ks.isEmpty { return nil }
+                let k = ks.removeLast() as String
+                return (k, JSON(o.valueForKey(k)))
+            }
         default:
-            return false
+            return GeneratorOf<(AnyObject, JSON)>{ nil }
         }
-    case .JString(let lvalue):
-        switch rhs {
-        case .JString(let rvalue):
-            return rvalue == lvalue
-        default:
-            return false
-        }
-    case .JBool(let lvalue):
-        switch rhs {
-        case .JBool(let rvalue):
-            return rvalue == lvalue
-        default:
-            return false
-        }
-    case .JNull:
-        switch rhs {
-        case .JNull:
-            return true
-        default:
-            return false
-        }
-    case .JArray(let lvalue):
-        switch rhs {
-        case .JArray(let rvalue):
-            return rvalue == lvalue
-        default:
-            return false
-        }
-    case .JObject(let lvalue):
-        switch rhs {
-        case .JObject(let rvalue):
-            return rvalue == lvalue
-        default:
-            return false
-        }
-    default:
-        return false
     }
+    public func mutableCopyOfTheObject() -> AnyObject {
+        return _value.mutableCopy()
+    }
+}
+extension JSON : Printable {
+    /// stringifies self.
+    /// if pretty:true it pretty prints
+    public func toString(pretty:Bool=false)->String {
+        switch _value {
+        case is NSError: return "\(_value)"
+        case is NSNull: return "null"
+        case let o as NSNumber:
+            switch String.fromCString(o.objCType)! {
+            case "c", "C":
+                return o.boolValue.description
+            case "q", "l", "i", "s":
+                return o.longLongValue.description
+            case "Q", "L", "I", "S":
+                return o.unsignedLongLongValue.description
+            default:
+                switch o.doubleValue {
+                case 0.0/0.0: return "0.0/0.0" // NaN
+                case -1.0/0.0: return "-1.0/0.0" // -infinity
+                case +1.0/0.0: return "+1.0/0.0" // infinity
+                default:
+                    return o.doubleValue.description
+                }
+            }
+        case let o as NSString:
+            return o.debugDescription
+        default:
+            let opts = pretty
+                ? NSJSONWritingOptions.PrettyPrinted : nil
+            let data = NSJSONSerialization.dataWithJSONObject(
+                _value, options:opts, error:nil
+            )
+            return NSString(
+                data:data, encoding:NSUTF8StringEncoding
+            )
+        }
+    }
+    public var description:String { return toString() }
 }

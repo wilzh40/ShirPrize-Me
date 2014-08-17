@@ -33,6 +33,8 @@ class Singleton {
     var designID:String = ""
     var orderID:String = ""
     
+    var address:Address = Address()
+    
     /*
     func textExample () {
         var url = "https://api.scalablepress.com/v2/products/gildan-sweatshirt-crew"
@@ -65,15 +67,16 @@ class Singleton {
     func quotePost () {
         
         var url = "https://api.scalablepress.com/v2/quote"
+        
         var post = SwiftNetworkingClient.post(url, params:
-            ["type":"\(quoteObject.type)","designId":"\(quoteObject.designId)","sides[front]":"\(quoteObject.sides.front)","sides[back]":"\(quoteObject.sides.back)","sides[left]":"\(quoteObject.sides.left)","sides[right]":"\(quoteObject.sides.left)","products[0][id]":"\(quoteObject.product.id)","products[0][color]":"\(quoteObject.product.color)","products[0][size]":"\(quoteObject.product.size)","products[0][quantity]":"\(quoteObject.product.quantity)"]
+            ["type":"\(quoteObject.type)","designId":"\(self.designID)","sides[front]":"\(quoteObject.sides.front)","sides[back]":"\(quoteObject.sides.back)","sides[left]":"\(quoteObject.sides.left)","sides[right]":"\(quoteObject.sides.left)","products[0][id]":"\(quoteObject.product.id)","products[0][color]":"\(quoteObject.product.color)","products[0][size]":"\(quoteObject.product.size)","products[0][quantity]":"\(quoteObject.product.quantity)","address[name]":"\(address.name)","address[address1]":"\(address.address)","address[city]":"\(address.city)","address[state]":"\(address.state)","address[zip]":"\(address.zip)"]
             ).onComplete({results -> Void in
                 println(results)
             }).onError({error -> Void in
                 println("Error!")
             })
         post.go()
-
+     
     }
     
     func designPost () {
@@ -82,6 +85,13 @@ class Singleton {
             ["type":"\(designObject.type)","name":"\(designObject.name)","sides[front][colors][0]":"\(designObject.color)","sides[front][artwork]":"\(designObject.artwork)","sides[front][dimensions][width]":"\(designObject.width)"]
             ).onComplete({results -> Void in
                 println(results)
+
+                let json = JSON.parse(results)
+                self.designID = json["designId"].asString!
+                self.quoteObject.designId = json["designId"].asString!
+                println(self.designID)
+                self.quotePost()
+
             }).onError({error -> Void in
                 println("Error!")
             })
@@ -108,7 +118,9 @@ class Singleton {
         var err:NSError?
         var url:NSURL = NSURL.URLWithString(urlString)
         var data:NSData = NSData.dataWithContentsOfURL(url, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)
-        
+        if data == nil {
+            println("no connection")
+        }
         if err != nil {
             println(err)
         }
@@ -158,13 +170,13 @@ class QuoteObject : NSObject {
         type = "screenprint"
         designId = "nil"
         sides.front = 1
-        product.id = ""
+        product.id = "anvil-100-cotton-t-shirt"
         product.quantity = 1
     }
     
 }
 class Address : NSObject {
-    var name:String = "W"
+    var name:String = "Joe Schlomo"
     var company:String?
     var address:String = "43419 Mission Siena Circle"
     var address2:String?
@@ -194,8 +206,8 @@ class Sides: NSObject {
 }
 class OrderObject : NSObject {
     var id:String = ""
-    var color:String?
-    var size:String?
+    var color:String = "White"
+    var size:String = "med"
     var quantity:Int = 0
     
 }
