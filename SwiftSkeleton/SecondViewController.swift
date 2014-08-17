@@ -27,7 +27,15 @@ class SecondViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func viewDidDisappear(animated: Bool) {
+        singleton.address.address = address!.text!
+        singleton.address.city = city!.text!
+        singleton.address.state = state!.text!
+        if zip!.text! != nil {
+            singleton.address.zip = zip!.text!.toInt()!
+        }
+        super.viewDidDisappear(true)
+    }
     
 }
 

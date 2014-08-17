@@ -38,6 +38,10 @@ class Singleton {
     var totalPrice:Double = 0
     var pricePerUnit:Double = 0
     
+    var postQuoteBool:Bool = false
+     var postDesignBool:Bool = false
+     var postOrderBool:Bool = false
+    
     /*
     func textExample () {
         var url = "https://api.scalablepress.com/v2/products/gildan-sweatshirt-crew"

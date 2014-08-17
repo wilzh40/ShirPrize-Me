@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="9pv-A4-QxB">
     <dependencies>
-        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Museo Slab.otf">
+            <string>MuseoSlab-500</string>
+            <string>MuseoSlab-500</string>
+            <string>MuseoSlab-500</string>
+            <string>MuseoSlab-500</string>
+            <string>MuseoSlab-500</string>
             <string>MuseoSlab-500</string>
             <string>MuseoSlab-500</string>
             <string>MuseoSlab-500</string>
@@ -22,13 +26,13 @@
         <!--Navigation Controller-->
         <scene sceneID="Pgi-Fz-4mV">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="o7e-s6-umW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="dQm-0B-HUy" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hoj-nj-92Z">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o7e-s6-umW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-317.86666666666667" y="-281.16000000000003"/>
         </scene>
@@ -72,7 +76,7 @@
                                 </state>
                                 <state key="highlighted" image="star.png"/>
                                 <connections>
-                                    <segue destination="LAr-zt-deP" kind="modal" id="Eq7-J1-vyS"/>
+                                    <segue destination="LAr-zt-deP" kind="modal" modalTransitionStyle="flipHorizontal" id="Eq7-J1-vyS"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -130,7 +134,7 @@
                                 </state>
                                 <state key="highlighted" image="star.png"/>
                                 <connections>
-                                    <segue destination="W3j-a5-5aA" kind="modal" id="GlG-fz-6OZ"/>
+                                    <segue destination="W3j-a5-5aA" kind="modal" modalTransitionStyle="flipHorizontal" id="GlG-fz-6OZ"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Zip" textAlignment="center" minimumFontSize="17" id="fy6-rU-5hc">
@@ -208,13 +212,16 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="egn-zJ-U5U">
-                                <rect key="frame" x="-184" y="404" width="687" height="49"/>
+                                <rect key="frame" x="-184" y="404" width="687" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
                                 <state key="normal" image="star.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted" image="star.png"/>
+                                <connections>
+                                    <segue destination="5Vv-JH-zZo" kind="modal" modalTransitionStyle="flipHorizontal" id="Xp0-hO-lMV"/>
+                                </connections>
                             </button>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minimumValue="1" maximumValue="100" id="AzG-1U-2FT" colorLabel="IBBuiltInLabel-Green">
                                 <rect key="frame" x="113" y="358" width="94" height="29"/>
@@ -237,10 +244,10 @@
             </objects>
             <point key="canvasLocation" x="785" y="-259"/>
         </scene>
-        <!--View Controller-->
+        <!--Fourth View Controller-->
         <scene sceneID="voL-58-qq2">
             <objects>
-                <viewController id="5Vv-JH-zZo" sceneMemberID="viewController">
+                <viewController id="5Vv-JH-zZo" customClass="FourthViewController" customModule="SwiftSkeleton" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9hm-7K-y6G">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -250,15 +257,61 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PROCESSING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h7F-Tu-Nje">
-                                <rect key="frame" x="-7" y="242" width="335" height="84"/>
+                                <rect key="frame" x="-8" y="28" width="335" height="84"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="MuseoSlab-500" family="Museo Slab" pointSize="50"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOTAL PRICE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K2c-EW-dRK">
+                                <rect key="frame" x="-10" y="179" width="339" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="MuseoSlab-500" family="Museo Slab" pointSize="50"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRICE PER SHIRT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1Om-RQ-C7Q">
+                                <rect key="frame" x="-10" y="299" width="339" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="MuseoSlab-500" family="Museo Slab" pointSize="30"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a5g-FE-cUn">
+                                <rect key="frame" x="36" y="406" width="248" height="142"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="MuseoSlab-500" family="Museo Slab" pointSize="20"/>
+                                <state key="normal" title="ShirPrize me" image="star.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="J6Z-hH-sb6">
+                                <rect key="frame" x="69" y="238" width="180" height="109"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="MuseoSlab-500" family="Museo Slab" pointSize="40"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oF8-JW-2io">
+                                <rect key="frame" x="63" y="328" width="192" height="136"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="MuseoSlab-500" family="Museo Slab" pointSize="30"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" id="nFl-JW-9p8">
+                                <rect key="frame" x="85" y="138" width="150" height="2"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="pricePerShirt" destination="oF8-JW-2io" id="tAD-zI-xFi"/>
+                        <outlet property="progressBar" destination="nFl-JW-9p8" id="dEm-nb-NUK"/>
+                        <outlet property="totalPrice" destination="J6Z-hH-sb6" id="ho6-Im-B5k"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qoc-gr-SwY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
