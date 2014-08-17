@@ -17,13 +17,19 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
     let singleton:Singleton = Singleton.sharedInstance
     var qo:QuoteObject = QuoteObject()
     
+    
 
+     @IBOutlet var imgFromUrl:UIImageView!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         singleton.sideMenu = SideMenu(sourceView: self.view, menuData: ["A","B","C","D"])
         // Do any additional setup after loading the view, typically from a nib.
+
+        imgFromUrl.image = singleton.getImageFromUrl("https://developer.apple.com/icloud/images/storage-backup.png")
+
+
         
         singleton.sideMenu!.delegate = self
        // imagePicker.delegate = self;
