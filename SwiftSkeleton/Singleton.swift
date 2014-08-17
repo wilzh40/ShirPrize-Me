@@ -106,7 +106,21 @@ class Singleton {
             })
         post.go()
     }
-    
+    func orderPost () {
+        var url = "https://api.scalablepress.com/v2/design"
+        var post = SwiftNetworkingClient.post(url, params:
+            ["orderToken":self.orderToken]
+            ).onComplete({results -> Void in
+                println(results)
+                
+                let json = JSON.parse(results)
+                
+            }).onError({error -> Void in
+                println("Error!")
+            })
+        post.go()
+    }
+
     func jsonify (dict: NSDictionary) -> NSString {
         var str = ""
         for (key,val) in dict {
@@ -172,6 +186,15 @@ class Singleton {
                 UIColor(red: 119/255, green: 152/255, blue: 255/255, alpha: 1),
                 ],
             selectedItemIndices: NSIndexSet())
+        self.frostedSidebar!.calloutsAlwaysSelected = true
+        //			frostedSidebar.showFromRight = true
+        //			frostedSidebara.isSingleSelect = true
+        
+        self.frostedSidebar!.actionForIndex[1] = { self.frostedSidebar!.dismissAnimated(true, completion: nil) }
+        self.frostedSidebar!.actionForIndex[2] = { self.frostedSidebar!.dismissAnimated(true, completion: nil) }
+        self.frostedSidebar!.actionForIndex[3] = { self.frostedSidebar!.dismissAnimated(true, completion: nil) }
+        self.frostedSidebar!.actionForIndex[4] = { self.frostedSidebar!.dismissAnimated(true, completion: nil) }
+
     }
    
 }

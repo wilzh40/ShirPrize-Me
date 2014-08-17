@@ -17,14 +17,13 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
     
     
 
-     @IBOutlet var imgFromUrl:UIImageView!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        imgFromUrl.image = singleton.getImageFromUrl("http://developer.apple.com/icloud/images/storage-backup.png")
+        //imgFromUrl.image = singleton.getImageFromUrl("http://developer.apple.com/icloud/images/storage-backup.png")
         singleton.initFrostedSidebar()
         singleton.frostedSidebar!.delegate = self
        // imagePicker.delegate = self;
@@ -91,14 +90,14 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
             var randomNumber = arc4random()%200000
             randomImage = singleton.getImageFromUrl("https://openclipart.org/image/200px/svg_to_png/\(randomNumber)/write2.png")
         }
-        imgFromUrl.image = randomImage
+       // imgFromUrl.image = randomImage
         singleton.artworkPath = "https://openclipart.org/image/200px/svg_to_png/\(randomNumber)/write2.png"
     }
     @IBAction func saveImage () {
-        singleton.artwork = imgFromUrl.image
+        //singleton.artwork = imgFromUrl.image
       
         //singleton.artworkPath = ("@\(singleton.documentsDirectoryPath)/artwork.png")
-        singleton.saveImage(imgFromUrl.image, fileName: "artwork", type: "png", directory: singleton.documentsDirectoryPath)
+        //singleton.saveImage(imgFromUrl.image, fileName: "artwork", type: "png", directory: singleton.documentsDirectoryPath)
         println("Image Saved!")
         
         println("Pushed")
