@@ -31,9 +31,11 @@ class Singleton {
     var quoteObject:QuoteObject = QuoteObject()
     
     var designID:String = ""
-    var orderID:String = ""
-    
+    var orderToken:String = ""
+  
     var address:Address = Address()
+    var totalPrice:Double = 0
+    var pricePerUnit:Double = 0
     
     /*
     func textExample () {
@@ -72,6 +74,12 @@ class Singleton {
             ["type":"\(quoteObject.type)","designId":"\(self.designID)","sides[front]":"\(quoteObject.sides.front)","sides[back]":"\(quoteObject.sides.back)","sides[left]":"\(quoteObject.sides.left)","sides[right]":"\(quoteObject.sides.left)","products[0][id]":"\(quoteObject.product.id)","products[0][color]":"\(quoteObject.product.color)","products[0][size]":"\(quoteObject.product.size)","products[0][quantity]":"\(quoteObject.product.quantity)","address[name]":"\(address.name)","address[address1]":"\(address.address)","address[city]":"\(address.city)","address[state]":"\(address.state)","address[zip]":"\(address.zip)"]
             ).onComplete({results -> Void in
                 println(results)
+                let json = JSON.parse(results)
+                self.orderToken = json["orderToken"].asString!
+                self.totalPrice = json["total"].asDouble!
+                self.pricePerUnit = json["total"].asDouble!/Double(self.quoteObject.product.quantity)
+                
+                println("Order Token:\(self.orderToken)")
             }).onError({error -> Void in
                 println("Error!")
             })
@@ -82,7 +90,7 @@ class Singleton {
     func designPost () {
         var url = "https://api.scalablepress.com/v2/design"
         var post = SwiftNetworkingClient.post(url, params:
-            ["type":"\(designObject.type)","name":"\(designObject.name)","sides[front][colors][0]":"\(designObject.color)","sides[front][artwork]":"\(designObject.artwork)","sides[front][dimensions][width]":"\(designObject.width)"]
+            ["type":"\(designObject.type)","name":"\(designObject.name)","sides[front][colors][0]":"\(designObject.color)","sides[front][artwork]":"\(designObject.artwork)","sides[front][dimensions][width]":"\(designObject.width)"/*,"sides[front][dimensions][height]":"\(designObject.height)"*/]
             ).onComplete({results -> Void in
                 println(results)
 
@@ -153,10 +161,11 @@ class Singleton {
 
 class DesignObject : NSObject {
     var name:String? = "a"
-    var type:String = "screenprint"
-    var color:String = "Red" //Color
+    var type:String = "dtg"
+    var color:String = "White" //Color
     var artwork:String = "white"
-    var width:Float = 11;
+    var width:Float = 5;
+    var height:Float = 7
 }
 
 
@@ -167,10 +176,10 @@ class QuoteObject : NSObject {
     var product = OrderObject()
     
     override init() {
-        type = "screenprint"
+        type = "dtg"
         designId = "nil"
         sides.front = 1
-        product.id = "anvil-100-cotton-t-shirt"
+        product.id = "american-apparel-t-shirt"
         product.quantity = 1
     }
     
