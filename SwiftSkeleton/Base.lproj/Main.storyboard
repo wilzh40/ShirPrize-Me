@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="9pv-A4-QxB">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Museo Slab.otf">
+            <string>MuseoSlab-500</string>
             <string>MuseoSlab-500</string>
             <string>MuseoSlab-500</string>
             <string>MuseoSlab-500</string>
@@ -20,13 +22,13 @@
         <!--Navigation Controller-->
         <scene sceneID="Pgi-Fz-4mV">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o7e-s6-umW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="dQm-0B-HUy" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hoj-nj-92Z">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="o7e-s6-umW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-317.86666666666667" y="-281.16000000000003"/>
         </scene>
@@ -197,10 +199,13 @@
                                 <rect key="frame" x="97" y="117" width="127" height="101"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="30"/>
-                                <state key="normal" title="Med">
+                                <state key="normal" title="med">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="changeSizeButton:" destination="W3j-a5-5aA" eventType="touchUpInside" id="qq2-Yk-SzZ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="egn-zJ-U5U">
                                 <rect key="frame" x="-184" y="404" width="687" height="49"/>
@@ -215,6 +220,9 @@
                                 <rect key="frame" x="113" y="358" width="94" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="oneStep:" destination="W3j-a5-5aA" eventType="valueChanged" id="KRf-M3-1oP"/>
+                                </connections>
                             </stepper>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -228,6 +236,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6G2-6V-3tE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="785" y="-259"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="voL-58-qq2">
+            <objects>
+                <viewController id="5Vv-JH-zZo" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9hm-7K-y6G">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background.jpg" id="4wS-mm-hae">
+                                <rect key="frame" x="-1" y="0.0" width="321" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PROCESSING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h7F-Tu-Nje">
+                                <rect key="frame" x="-7" y="242" width="335" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="MuseoSlab-500" family="Museo Slab" pointSize="50"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qoc-gr-SwY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1148" y="-259"/>
         </scene>
     </scenes>
     <resources>

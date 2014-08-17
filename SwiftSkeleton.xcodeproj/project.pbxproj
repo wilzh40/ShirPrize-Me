@@ -22,6 +22,8 @@
 		778E4EA419A0964600F162BD /* FrostedSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778E4EA319A0964600F162BD /* FrostedSidebar.swift */; };
 		778E4EA619A0A20100F162BD /* Museo Slab.otf in Resources */ = {isa = PBXBuildFile; fileRef = 778E4EA519A0A20100F162BD /* Museo Slab.otf */; };
 		778E4EA819A0A5A800F162BD /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778E4EA719A0A5A800F162BD /* ThirdViewController.swift */; };
+		778E4EAA19A0B60200F162BD /* FourthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778E4EA919A0B60200F162BD /* FourthViewController.swift */; };
+		778E4EAE19A0B8E900F162BD /* YYSkinkitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778E4EAD19A0B8E900F162BD /* YYSkinkitView.swift */; };
 		77A2D4F9199F1F0E002DD4CE /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2D4F7199F1F0E002DD4CE /* SideMenu.swift */; };
 		77A2D4FA199F1F0E002DD4CE /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2D4F8199F1F0E002DD4CE /* MenuTableViewController.swift */; };
 		77A2D4FC199F2845002DD4CE /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2D4FB199F2845002DD4CE /* NavigationController.swift */; };
@@ -63,6 +65,8 @@
 		778E4EA319A0964600F162BD /* FrostedSidebar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrostedSidebar.swift; sourceTree = "<group>"; };
 		778E4EA519A0A20100F162BD /* Museo Slab.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Museo Slab.otf"; sourceTree = "<group>"; };
 		778E4EA719A0A5A800F162BD /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
+		778E4EA919A0B60200F162BD /* FourthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FourthViewController.swift; sourceTree = "<group>"; };
+		778E4EAD19A0B8E900F162BD /* YYSkinkitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYSkinkitView.swift; sourceTree = "<group>"; };
 		77A2D4F7199F1F0E002DD4CE /* SideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		77A2D4F8199F1F0E002DD4CE /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		77A2D4FB199F2845002DD4CE /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -127,6 +131,8 @@
 				77A4A75C199E8E680015C644 /* FirstViewController.swift */,
 				77A4A75E199E8E680015C644 /* SecondViewController.swift */,
 				778E4EA719A0A5A800F162BD /* ThirdViewController.swift */,
+				778E4EAD19A0B8E900F162BD /* YYSkinkitView.swift */,
+				778E4EA919A0B60200F162BD /* FourthViewController.swift */,
 				77A2D4F7199F1F0E002DD4CE /* SideMenu.swift */,
 				77A2D4F8199F1F0E002DD4CE /* MenuTableViewController.swift */,
 				77A2D4FD199F312B002DD4CE /* Singleton.swift */,
@@ -295,9 +301,11 @@
 				77A2D4FA199F1F0E002DD4CE /* MenuTableViewController.swift in Sources */,
 				77A2D4F9199F1F0E002DD4CE /* SideMenu.swift in Sources */,
 				77A2D4FE199F312B002DD4CE /* Singleton.swift in Sources */,
+				778E4EAA19A0B60200F162BD /* FourthViewController.swift in Sources */,
 				778E4EA419A0964600F162BD /* FrostedSidebar.swift in Sources */,
 				77A2D507199F5707002DD4CE /* SwiftNetworkingClient.swift in Sources */,
 				77A2D4FC199F2845002DD4CE /* NavigationController.swift in Sources */,
+				778E4EAE19A0B8E900F162BD /* YYSkinkitView.swift in Sources */,
 				77CDC18A19A021EB0099033C /* ImageSaver.swift in Sources */,
 				77A4A75D199E8E680015C644 /* FirstViewController.swift in Sources */,
 				778E4EA819A0A5A800F162BD /* ThirdViewController.swift in Sources */,

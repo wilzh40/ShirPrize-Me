@@ -30,11 +30,35 @@ class ThirdViewController: UIViewController {
     }
     
     @IBAction func changeSizeButton (sender:AnyObject) {
-        
+        if size?.titleLabel.text == "med" {
+            size?.setTitle("lrg", forState: UIControlState.Normal)
+        }
+        if size?.titleLabel.text == "sma" {
+            size?.setTitle("med", forState: UIControlState.Normal)
+        }
+        if size?.titleLabel.text == "lrg" {
+            size?.setTitle("sma", forState: UIControlState.Normal)
+        }
+        singleton.quoteObject.product.size = size!.titleLabel.text!
     }
     @IBAction func oneStep (sender:AnyObject) {
-        quantity?.text = "\(stepper?.value)"
+        quantity?.text = "\(Int(stepper!.value))"
+        singleton.quoteObject.product.quantity = Int(stepper!.value)
     }
-    
+    @IBAction func loading (sender:AnyObject) {
+        
+        self.insertSpinner(YYSpinkitView(style:YYSpinKitViewStyle.Pulse,color:UIColor.whiteColor()),
+            atIndex:4,backgroundColor:UIColor(red:0.498,green:0.549,blue:0.553,alpha:1.0))
+    }
+    func insertSpinner(spinner:YYSpinkitView,atIndex index:Int,backgroundColor color:UIColor){
+        var screenBounds = UIScreen.mainScreen().bounds
+        var screenWidth = CGRectGetWidth(screenBounds)
+        var panel = UIView(frame:CGRectOffset(screenBounds, screenWidth * CGFloat(index), 0.0))
+        panel.backgroundColor = color
+        spinner.center = CGPointMake(CGRectGetMidX(screenBounds), CGRectGetMidY(screenBounds))
+        panel.addSubview(spinner)
+        self.view.addSubview(panel)
+    }
+      
 }
 
