@@ -8,14 +8,18 @@
 
 import UIKit
 
-class SecondViewController: UIViewController,SideMenuDelegate {
+class SecondViewController: UIViewController {
     let singleton:Singleton = Singleton.sharedInstance
-    
+
+    @IBOutlet  var address: UITextField?
+    @IBOutlet  var city: UITextField?
+    @IBOutlet  var state: UITextField?
+    @IBOutlet  var zip: UITextField?
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-        singleton.sideMenu = SideMenu(sourceView: self.view, menuData: ["A","B","C","D"])
-        // Do any additional setup after loading the view, typically from a nib.
-        singleton.sideMenu!.delegate = self
+             // Do any additional setup after loading the view, typically from a nib.
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -23,14 +27,8 @@ class SecondViewController: UIViewController,SideMenuDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func sideMenuDidSelectItemAtIndex(index: Int) {
-        singleton.sideMenu?.toggleMenu()
-     //   self.performSegueWithIdentifier("Show1", sender: self)
-    }
-    
-    @IBAction func toggleSideMenu(sender: AnyObject) {
-        singleton.sideMenu?.toggleMenu()
-    }
+
+  
 
     
 }

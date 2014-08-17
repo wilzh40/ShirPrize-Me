@@ -10,7 +10,8 @@ import UIKit
 
 class FirstViewController: UIViewController, UIImagePickerControllerDelegate, SideMenuDelegate,FrostedSidebarDelegate {
        
-    
+
+
     let imagePicker:UIImagePickerController = UIImagePickerController()
     let singleton:Singleton = Singleton.sharedInstance
 
