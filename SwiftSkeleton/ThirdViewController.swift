@@ -29,8 +29,12 @@ class ThirdViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-  
-    
+    @IBAction func changeSizeButton (sender:AnyObject) {
+        
+    }
+    @IBAction func oneStep (sender:AnyObject) {
+        quantity?.text = "\(stepper?.value)"
+    }
     
 }
 
