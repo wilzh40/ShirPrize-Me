@@ -88,5 +88,19 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
     @IBAction func presentImagePicker(sender: AnyObject){
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
+    @IBAction func newImage () {
+        var randomNumber = arc4random()%200000
+        var randomImage:UIImage = singleton.getImageFromUrl("https://openclipart.org/image/200px/svg_to_png/\(randomNumber)/write2.png")
+        
+        while (randomImage == nil ){
+            //If its lower
+            var randomNumber = arc4random()%200000
+
+            randomImage = singleton.getImageFromUrl("https://openclipart.org/image/200px/svg_to_png/\(randomNumber)/write2.png")
+        }
+        imgFromUrl.image = randomImage
+        
+
+    }
 }
 

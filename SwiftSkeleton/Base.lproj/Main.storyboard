@@ -58,6 +58,11 @@
                                 <action selector="toggleSideMenu:" destination="9pv-A4-QxB" id="yZ7-hN-Kad"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="ShirPrize me" id="VJQ-cP-JiV">
+                            <connections>
+                                <action selector="newImage" destination="9pv-A4-QxB" id="0Z8-W2-LFx"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="imgFromUrl" destination="3gI-zn-hz5" id="5zt-Hd-3y3"/>
