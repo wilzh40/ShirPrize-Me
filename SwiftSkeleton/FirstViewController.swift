@@ -15,7 +15,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
     
     
     let singleton:Singleton = Singleton.sharedInstance
-    var qo:QuoteObject = QuoteObject()
+
     
     
 
@@ -29,14 +29,12 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
 
         imgFromUrl.image = singleton.getImageFromUrl("https://developer.apple.com/icloud/images/storage-backup.png")
 
-
-        
         singleton.sideMenu!.delegate = self
        // imagePicker.delegate = self;
     
         
-        qo.type = "screenprint"
-        singleton.designPost(singleton.designObject)
+        
+    
         //singleton.quotePost(qo)
 
         
@@ -91,16 +89,36 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, Si
     @IBAction func newImage () {
         var randomNumber = arc4random()%200000
         var randomImage:UIImage = singleton.getImageFromUrl("https://openclipart.org/image/200px/svg_to_png/\(randomNumber)/write2.png")
-        
+    
         while (randomImage == nil ){
             //If its lower
             var randomNumber = arc4random()%200000
-
             randomImage = singleton.getImageFromUrl("https://openclipart.org/image/200px/svg_to_png/\(randomNumber)/write2.png")
         }
         imgFromUrl.image = randomImage
-        
-
+        singleton.artworkPath = "https://openclipart.org/image/800px/svg_to_png/\(randomNumber)/write2.png"
     }
+    @IBAction func saveImage () {
+        singleton.artwork = imgFromUrl.image
+      
+        //singleton.artworkPath = ("@\(singleton.documentsDirectoryPath)/artwork.png")
+        singleton.saveImage(imgFromUrl.image, fileName: "artwork", type: "png", directory: singleton.documentsDirectoryPath)
+        println("Image Saved!")
+        
+        println("Pushed")
+        
+        
+        
+        singleton.designObject.artwork = singleton.artworkPath
+        singleton.designID = "screenprint"
+        
+        
+        singleton.designPost()
+        singleton.quotePost()
+        
+        
+    }
+    
+
 }
 

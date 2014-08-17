@@ -20,12 +20,18 @@ class Singleton {
     var sideMenu:SideMenu?
     var apikey:String? = "17b03c3c38a23a46df62d0d8bb68665a"
     
+    var artwork:UIImage = UIImage()
+    var artworkPath:NSString = ""
+    var documentsDirectoryPath:NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)[0] as NSString
+
+    
+    
+    
     var designObject:DesignObject = DesignObject()
+    var quoteObject:QuoteObject = QuoteObject()
     
-    
-    
-    var quoteParam:NSDictionary = ["0":"0"]
-    var orderParam:NSDictionary = ["0":"0"]
+    var designID:String = ""
+    var orderID:String = ""
     
     /*
     func textExample () {
@@ -56,11 +62,11 @@ class Singleton {
         getTracksRequest.go()
         
     } */
-    func quotePost (qo:QuoteObject) {
+    func quotePost () {
         
         var url = "https://api.scalablepress.com/v2/quote"
         var post = SwiftNetworkingClient.post(url, params:
-            ["type":"\(qo.type)","designId":"\(qo.designId)","sides[front]":"\(qo.sides.front)","sides[back]":"\(qo.sides.back)","sides[left]":"\(qo.sides.left)","sides[right]":"\(qo.sides.left)","products[0][id]":"\(qo.product.id)","products[0][color]":"\(qo.product.color)","products[0][size]":"\(qo.product.size)","products[0][quantity]":"\(qo.product.quantity)"]
+            ["type":"\(quoteObject.type)","designId":"\(quoteObject.designId)","sides[front]":"\(quoteObject.sides.front)","sides[back]":"\(quoteObject.sides.back)","sides[left]":"\(quoteObject.sides.left)","sides[right]":"\(quoteObject.sides.left)","products[0][id]":"\(quoteObject.product.id)","products[0][color]":"\(quoteObject.product.color)","products[0][size]":"\(quoteObject.product.size)","products[0][quantity]":"\(quoteObject.product.quantity)"]
             ).onComplete({results -> Void in
                 println(results)
             }).onError({error -> Void in
@@ -70,10 +76,10 @@ class Singleton {
 
     }
     
-    func designPost (qo:DesignObject) {
+    func designPost () {
         var url = "https://api.scalablepress.com/v2/design"
         var post = SwiftNetworkingClient.post(url, params:
-            ["type":"\(qo.type)","name":"\(qo.name)","sides[front][color]":"\(qo.color)","sides[front][artwork]":"\(qo.artwork)"]
+            ["type":"\(designObject.type)","name":"\(designObject.name)","sides[front][colors][0]":"\(designObject.color)","sides[front][artwork]":"\(designObject.artwork)","sides[front][dimensions][width]":"\(designObject.width)"]
             ).onComplete({results -> Void in
                 println(results)
             }).onError({error -> Void in
@@ -97,9 +103,7 @@ class Singleton {
     
     
     
-    ///*****IMAGE SAVING******???
-    var documentsDirectoryPath:NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)[0] as NSString
-    func getImageFromUrl(urlString:NSString) -> UIImage {
+       func getImageFromUrl(urlString:NSString) -> UIImage {
         var result:UIImage
         var err:NSError?
         var url:NSURL = NSURL.URLWithString(urlString)
@@ -113,6 +117,7 @@ class Singleton {
     
     func saveImage(image:UIImage,fileName:NSString,type:NSString,directory:NSString) {
         var err:NSError?
+        println("Saving at \(directory)/\(fileName).\(type)")
         if type.lowercaseString == "png" {
             UIImagePNGRepresentation(image).writeToFile(directory.stringByAppendingPathComponent("\(fileName).png"), options:NSDataWritingOptions.DataWritingAtomic, error: &err)
         }
@@ -124,7 +129,9 @@ class Singleton {
         }
     }
     func loadImage(fileName:NSString,type:String,directory:NSString) -> UIImage {
-        var result:UIImage = NSData.dataWithContentsOfMappedFile("\(directory)/\(fileName).\(type)") as UIImage
+        println("Loading \(directory)/\(fileName).\(type)")
+        var data: AnyObject! = NSData.dataWithContentsOfMappedFile("\(directory)/\(fileName).\(type)")
+        var result:UIImage = UIImage(data: data as NSData)
         return result
         
     }
@@ -134,10 +141,10 @@ class Singleton {
 
 class DesignObject : NSObject {
     var name:String? = "a"
-    var type:String = "b"
+    var type:String = "screenprint"
     var color:String = "Red" //Color
     var artwork:String = "white"
-    
+    var width:Float = 11;
 }
 
 
